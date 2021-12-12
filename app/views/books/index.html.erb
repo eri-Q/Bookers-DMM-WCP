@@ -1,0 +1,40 @@
+<h1>Books</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Body</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @books.each do |list|%>
+    <tr>
+      <td class="title">
+        <%= list.title %>
+      </td>
+      <td>
+        <%= list.body%>
+      </td>
+      <td>
+      <%= link_to "show", "/books/:id" %>
+      <%= link_to "edit", "/books/:id/edit" %>
+      </td>
+
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>New book</h2>
+<%= form_with model:Book.new, url:'/books', local:true do |f| %>
+<p id="heading-title">Title</p>
+<%= f.text_field:title %>
+<p id="heading-body">Body</p>
+<%= f.text_area:body %>
+
+<br><div id="submit-button"><%= f.submit 'Create Book' %></div>
+
+<% end %>
