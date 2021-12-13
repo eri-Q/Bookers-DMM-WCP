@@ -2,13 +2,8 @@ class BooksController < ApplicationController
 
   def index
     @books = Book.all
-    @book = Book.new(book_params)
-    if @book.save
-      redirect_to book(@book.id)
-    else
-      render :new
-    end
     
+    @book = Book.new
   end
 
   def new
@@ -22,6 +17,7 @@ class BooksController < ApplicationController
     else
       render :index
     end
+
   end
 
 
@@ -44,14 +40,17 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    book = Book.find(params[:id])
-    book.destroy
-    redirect_to books_path
+    @book = Book.find(params[:id])
+    if @book.destroy
+    redirect_to books_path, notice: 'Book was successfully destroyed.'
+    else
+    render :index
+    end
   end
 
   private
   def book_params
-    params.require(:book).permit(:title, :body,)
+    params.require(:book).permit(:title, :body)
   end
 
 
